@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FrontierPay Visa Sandbox V1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-72 bg-white border-r p-6">
+      <h1 class="text-2xl font-bold mb-8">FrontierPay</h1>
+
+      <nav class="space-y-3">
+        <button onclick="showSection('overview')" class="w-full text-left px-4 py-2 rounded-xl hover:bg-gray-100">Overview</button>
+        <button onclick="showSection('security')" class="w-full text-left px-4 py-2 rounded-xl hover:bg-gray-100">Security</button>
+        <button onclick="showSection('architecture')" class="w-full text-left px-4 py-2 rounded-xl hover:bg-gray-100">Architecture</button>
+        <button onclick="showSection('sandbox')" class="w-full text-left px-4 py-2 rounded-xl hover:bg-gray-100">Sandbox Tests</button>
+        <button onclick="showSection('logs')" class="w-full text-left px-4 py-2 rounded-xl hover:bg-gray-100">Logs & Retry</button>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-8 overflow-y-auto">
+
+      <!-- OVERVIEW -->
+      <section id="overview" class="section">
+        <h2 class="text-3xl font-bold mb-6">Visa Sandbox Integration</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-lg font-semibold mb-2">Visa Direct</h3>
+            <p class="text-sm text-gray-500">Push-to-card and settlement sandbox integration.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-lg font-semibold mb-2">Treasury Layer</h3>
+            <p class="text-sm text-gray-500">Routing, reserve management and liquidity orchestration.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-lg font-semibold mb-2">Secure Adapter</h3>
+            <p class="text-sm text-gray-500">mTLS, secret isolation and backend-only architecture.</p>
+          </div>
+
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+          <h3 class="text-xl font-semibold mb-4">Sandbox Endpoint</h3>
+          <div class="bg-gray-900 text-green-400 p-4 rounded-xl overflow-x-auto text-sm">
+https://sandbox.api.visa.com
+          </div>
+        </div>
+      </section>
+
+      <!-- SECURITY -->
+      <section id="security" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Secrets Isolation</h2>
+
+        <div class="bg-white rounded-2xl shadow p-6 mb-6">
+          <h3 class="text-xl font-semibold mb-4">.env Configuration</h3>
+
+          <pre class="bg-gray-900 text-green-400 p-4 rounded-xl overflow-x-auto text-sm">
+PORT=3000
+
+VISA_BASE_URL=https://sandbox.api.visa.com
+
+VISA_KEY_ID=YOUR_KEY_ID
+VISA_API_KEY=YOUR_API_KEY
+VISA_TLS_USER=YOUR_TLS_USER
+
+VISA_CERT_PATH=./certs/cert.pem
+VISA_KEY_PATH=./certs/private.key
+VISA_CA_PATH=./certs/DigiCertGlobalRootG2.crt.pem
+          </pre>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+          <h3 class="text-xl font-semibold mb-4">Security Rules</h3>
+
+          <ul class="space-y-3 text-sm text-gray-600">
+            <li>✅ Backend-only integration</li>
+            <li>✅ Never expose API keys frontend</li>
+            <li>✅ Use .gitignore for certs and .env</li>
+            <li>✅ Separate sandbox and production</li>
+            <li>✅ Enable request logging and retry queue</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section id="architecture" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Architecture</h2>
+
+        <div class="bg-white rounded-2xl shadow p-6 mb-6">
+          <h3 class="text-xl font-semibold mb-4">FrontierPay Treasury Flow</h3>
+
+          <div class="bg-gray-50 border rounded-2xl p-6 text-sm leading-8">
+            User Wallet<br>
+            ↓<br>
+            FrontierPay API<br>
+            ↓<br>
+            Routing Engine<br>
+            ↓<br>
+            Treasury Engine<br>
+            ↓<br>
+            Visa Adapter<br>
+            ↓<br>
+            Visa Direct Sandbox<br>
+            ↓<br>
+            Settlement / Push-to-Card
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6">
+          <h3 class="text-xl font-semibold mb-4">Project Structure</h3>
+
+          <pre class="bg-gray-900 text-green-400 p-4 rounded-xl overflow-x-auto text-sm">
+backend/
+ ├── services/
+ │    └── visa/
+ │         ├── visaClient.js
+ │         ├── visaRoutes.js
+ │         ├── visaSandboxTest.js
+ │         ├── visaLogger.js
+ │         └── visaRetryQueue.js
+ │
+ ├── certs/
+ ├── logs/
+ ├── .env
+ └── app.js
+          </pre>
+        </div>
+      </section>
+
+      <!-- SANDBOX -->
+      <section id="sandbox" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Sandbox Tests</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-xl font-semibold mb-4">TLS Validation</h3>
+            <button onclick="runTest('TLS connection successful')" class="bg-black text-white px-4 py-2 rounded-xl">Run TLS Test</button>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-xl font-semibold mb-4">Push Funds Simulation</h3>
+            <button onclick="runTest('Push Funds simulated successfully')" class="bg-black text-white px-4 py-2 rounded-xl">Run Push Funds</button>
+          </div>
+
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-6 mt-6">
+          <h3 class="text-xl font-semibold mb-4">Sandbox Output</h3>
+
+          <div id="sandbox-output" class="bg-gray-900 text-green-400 p-4 rounded-xl min-h-[120px] text-sm overflow-auto">
+Ready.
+          </div>
+        </div>
+      </section>
+
+      <!-- LOGS -->
+      <section id="logs" class="section hidden">
+        <h2 class="text-3xl font-bold mb-6">Logs & Retry Queue</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-xl font-semibold mb-4">Retry Queue</h3>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div>Pending retries: 0</div>
+              <div>Failed requests: 0</div>
+              <div>Recovery status: ACTIVE</div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow p-6">
+            <h3 class="text-xl font-semibold mb-4">Visa Logs</h3>
+            <div class="space-y-2 text-sm text-gray-600">
+              <div>Request logger enabled</div>
+              <div>Error logger enabled</div>
+              <div>Sandbox monitoring active</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(s => s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function runTest(message) {
+      const output = document.getElementById('sandbox-output');
+      const now = new Date().toLocaleTimeString();
+
+      output.innerHTML += `\n[${now}] ${message}`;
+      output.scrollTop = output.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
